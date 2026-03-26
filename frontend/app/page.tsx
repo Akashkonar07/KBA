@@ -2,6 +2,16 @@
 
 import { useEffect, useState } from 'react'
 import { checkHealth, getApiInfo } from '@/lib/api'
+import Link from 'next/link'
+
+const features = [
+  { icon: '📄', title: 'Document Ingestion', path: '/documents', desc: 'Upload PDF, DOCX files', color: 'bg-blue-500' },
+  { icon: '🎬', title: 'YouTube Transcript', path: '/youtube', desc: 'Extract video transcripts', color: 'bg-red-500' },
+  { icon: '🌐', title: 'Web Scraper', path: '/web', desc: 'Scrape web page content', color: 'bg-green-500' },
+  { icon: '💬', title: 'RAG Chat', path: '/chat', desc: 'Chat with your knowledge base', color: 'bg-purple-500' },
+  { icon: '🗺️', title: 'Mind Map', path: '/mindmap', desc: 'Generate visual mind maps', color: 'bg-yellow-500' },
+  { icon: '📊', title: 'Topic Clustering', path: '/cluster', desc: 'Cluster documents by topic', color: 'bg-indigo-500' },
+]
 
 export default function Home() {
   const [health, setHealth] = useState<{ status: string; timestamp: string; service: string } | null>(null)
@@ -57,17 +67,26 @@ export default function Home() {
             )}
           </div>
 
-          {/* Features Preview */}
+          {/* Features Grid */}
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-semibold mb-4">Features (Coming Soon)</h2>
-            <ul className="space-y-2 text-gray-600">
-              <li>📄 Document Ingestion (PDF, DOCX)</li>
-              <li>🎬 YouTube Transcript Extraction</li>
-              <li>🌐 Web Content Scraping</li>
-              <li>💬 RAG-based Chat Interface</li>
-              <li>🗺️ Mind Map Generation</li>
-              <li>📊 Topic Clustering</li>
-            </ul>
+            <h2 className="text-xl font-semibold mb-4">Features</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {features.map((feature) => (
+                <Link
+                  key={feature.path}
+                  href={feature.path}
+                  className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <span className={`${feature.color} text-white w-12 h-12 rounded-lg flex items-center justify-center text-2xl`}>
+                    {feature.icon}
+                  </span>
+                  <div>
+                    <h3 className="font-semibold">{feature.title}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{feature.desc}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

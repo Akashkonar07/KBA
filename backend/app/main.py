@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
-from app.routes import health
+from app.routes import health, documents, youtube, web, chat, mindmap, cluster
 
 settings = get_settings()
 
@@ -22,6 +22,12 @@ app.add_middleware(
 
 # Include routes
 app.include_router(health.router)
+app.include_router(documents.router)
+app.include_router(youtube.router)
+app.include_router(web.router)
+app.include_router(chat.router)
+app.include_router(mindmap.router)
+app.include_router(cluster.router)
 
 
 @app.get("/")
