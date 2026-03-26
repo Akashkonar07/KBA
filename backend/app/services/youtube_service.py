@@ -16,7 +16,7 @@ class YouTubeService:
             r"(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})",
             r"^([a-zA-Z0-9_-]{11})$"  # Just the video ID
         ]
-        
+      
         for pattern in patterns:
             match = re.search(pattern, url)
             if match:
@@ -36,7 +36,8 @@ class YouTubeService:
         
         try:
             # Try to get transcript in requested language
-            transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+            ytt_api = YouTubeTranscriptApi()
+            transcript_list = ytt_api.list(video_id)
             
             try:
                 transcript = transcript_list.find_transcript([language])
@@ -47,7 +48,7 @@ class YouTubeService:
             transcript_data = transcript.fetch()
             
             # Combine all transcript entries
-            full_text = " ".join([entry["text"] for entry in transcript_data])
+            full_text = " ".join([entry.text for entry in transcript_data])
             
             return {
                 "success": True,
